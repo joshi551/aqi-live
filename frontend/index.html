@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AQI Forecast - Visakhapatnam and Vijayawada</title>
+<style>
+:root{--bg:#15171a;--card:#1f2328;--card2:#282d33;--tx:#e9ecef;--mut:#9aa4af;--ln:#343b43;--acc:#4da3ff}
+[data-theme=light]{--bg:#f1f3f6;--card:#fff;--card2:#eef1f4;--tx:#17202a;--mut:#5d6975;--ln:#dde2e8;--acc:#1971c2}
+[data-theme=light] .big,[data-theme=light] .catn{filter:brightness(.78) saturate(1.2)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 "Segoe UI",system-ui,Arial,sans-serif}
+.top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:12px 20px;background:var(--card);border-bottom:1px solid var(--ln);position:sticky;top:0;z-index:5}
+.brand{font-weight:700;font-size:19px;margin-right:8px}.tools{margin-left:auto;display:flex;gap:8px}
+button{font:inherit;color:var(--tx);background:var(--card2);border:1px solid var(--ln);border-radius:8px;padding:6px 12px;cursor:pointer}
+button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+main{max-width:1100px;margin:0 auto;padding:16px}h2{font-size:20px;margin:30px 0 4px}.sub{color:var(--mut);font-size:13px;margin-bottom:12px}
+.card{background:var(--card);border-radius:20px;border:1px solid var(--ln)}.mut{color:var(--mut)}
+.hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1.4fr 1fr;gap:20px;padding:24px}
+.glow{position:absolute;inset:0;opacity:.28;pointer-events:none}.hero>div:not(.glow){position:relative}
+.live{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}.live i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.row{display:flex;align-items:center;gap:18px;margin:6px 0}.big{font-size:84px;font-weight:800;line-height:1}.catn{font-size:30px;font-weight:700}
+.pm{display:flex;gap:28px;margin:10px 0 16px;font-size:16px}.pm b{font-size:20px}
+.bar{height:7px;border-radius:5px;position:relative;margin-top:6px}.mk{position:absolute;top:-4px;width:15px;height:15px;border-radius:50%;background:var(--tx);border:3px solid var(--card);transform:translateX(-50%)}
+.lab{display:flex;margin-top:8px;font-size:12px;color:var(--mut)}.lab span{text-align:center}.lab em{display:block;font-style:normal;font-size:11px;opacity:.8}
+.fp{background:var(--card2);border-radius:16px;padding:16px;align-self:start}.fp h3{margin:0 0 10px;font-size:16px}
+.fr{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--ln)}.fr:first-of-type{border-top:0}
+.chip{min-width:52px;text-align:center;font-weight:700;padding:5px 8px;border-radius:9px;color:#111}.fr small{display:block;color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.pc{background:var(--card);border:1px solid var(--ln);border-left:4px solid var(--ln);border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.pc b{font-size:24px}.pc small{display:block;color:var(--mut);text-align:right}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}.ctl .sp{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.mm{display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--ln);border-radius:12px;padding:6px 10px;font-size:12px}.mm b{padding:4px 9px;border-radius:8px;color:#111;font-size:15px}
+.cw{position:relative;padding:14px}svg{width:100%;height:auto;display:block}svg text{fill:var(--mut);font-size:11px}
+.tip{position:absolute;pointer-events:none;background:var(--card2);border:1px solid var(--ln);border-radius:8px;padding:6px 10px;font-size:12px;display:none;white-space:nowrap;z-index:3}
+.leg{display:flex;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--mut);padding:0 14px 12px}
+.days{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}.day{background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:12px 14px}
+.day .t{font-weight:600;display:flex;justify-content:space-between;gap:8px;align-items:center}.tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:6px;color:#111}
+table{width:100%;border-collapse:collapse}th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--ln)}th{color:var(--mut);font-weight:500;font-size:13px}
+tr.cl{cursor:pointer}tr.cl:hover{background:var(--card2)}.tw{padding:8px 10px;overflow-x:auto}
+.sc{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:12px 16px;margin-bottom:8px}.sc.cur{border-color:var(--tx)}
+.sq{width:16px;height:16px;border-radius:4px;flex:none}.sc .n{min-width:130px;font-weight:600}.sc .n small{display:block;color:var(--mut);font-weight:400}
+.err{color:#f08a24}footer{color:var(--mut);font-size:12px;margin:30px 0 20px}
+@media(max-width:760px){.hero{grid-template-columns:1fr;padding:16px}.big{font-size:64px}.grid{grid-template-columns:1fr 1fr}.sc{flex-wrap:wrap}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.pm{gap:16px}.lab{font-size:10px}.lab em{display:none}}
+</style></head><body>
+<header class="top"><div class="brand">AQI Forecast</div><div id="tabs"></div>
+<div class="tools"><button id="ref">Refresh data</button><button id="th">Light / dark</button></div></header>
+<main>
+<section class="hero card" id="hero"><div class="mut">Loading...</div></section>
+<div class="sub" id="src" style="margin-top:10px"></div>
+
+<h2>Major air pollutants</h2><div class="sub" id="pcity"></div><div class="grid" id="pol"></div>
+
+<h2>AQI history and forecast</h2><div class="sub">Measured hours, then the next 72 hours predicted by the SSA + SARIMA + LSTM hybrid.</div>
+<div class="ctl"><button data-h="24" class="on">24 hours</button><button data-h="72">3 days</button><button data-h="168">7 days</button>
+<button data-m="bar" class="on">Bars</button><button data-m="line">Line</button><div class="sp" id="mm"></div></div>
+<div class="card cw"><div class="tip" id="tip"></div><svg id="chart" viewBox="0 0 1000 330"></svg></div>
+<div class="card leg"><span>Solid bars: measured</span><span>Faded bars: hybrid forecast</span><span>Dotted line: plain LSTM forecast</span></div>
+
+<h2>Daily forecast bulletin</h2><div class="sub">Built from the 72-hour hybrid forecast.</div><div class="days" id="days"></div>
+
+<h2>Cities</h2><div class="sub">Ranked by current AQI. Click a row to open the city.</div><div class="card tw"><table id="rank"></table></div>
+
+<h2>AQI scale (CPCB)</h2><div class="sub">What each category means for health.</div><div id="scale"></div>
+
+<h2>Model accuracy</h2><div class="sub" id="metn"></div><div class="card tw"><table id="met"></table></div>
+
+<footer>AQI is calculated with the CPCB method. Live values are CAMS model estimates from Open-Meteo, not station readings. Pollutant card colours use each pollutant's sub-index and are approximate. CO is in mg/m3.</footer>
+</main>
+<script>
+const CATS=[{n:"Good",max:50,c:"#2fb344",d:"Minimal impact. Enjoy outdoor activities."},{n:"Satisfactory",max:100,c:"#9acd32",d:"Minor breathing discomfort to sensitive people."},{n:"Moderate",max:200,c:"#f5c518",d:"Discomfort to people with lung or heart disease, children and older adults."},{n:"Poor",max:300,c:"#f08a24",d:"Breathing discomfort to most people on prolonged exposure. Limit outdoor activity."},{n:"Very Poor",max:400,c:"#e5484d",d:"Respiratory illness on prolonged exposure. Avoid outdoor exertion."},{n:"Severe",max:500,c:"#9b1c3a",d:"Affects healthy people and seriously affects those with disease. Stay indoors."}];
+const IDX=[0,50,100,200,300,400,500],BP={"PM2.5":[0,30,60,90,120,250,380],"PM10":[0,50,100,250,350,430,510],"NO2":[0,40,80,180,280,400,800],"SO2":[0,40,80,380,800,1600,2000],"CO":[0,1,2,10,17,34,50],"O3":[0,50,100,168,208,748,1000]};
+const PN={"PM2.5":["Particulate Matter","PM2.5","µg/m³"],"PM10":["Particulate Matter","PM10","µg/m³"],"CO":["Carbon Monoxide","CO","mg/m³"],"SO2":["Sulphur Dioxide","SO₂","µg/m³"],"NO2":["Nitrogen Dioxide","NO₂","µg/m³"],"O3":["Ozone","O₃","µg/m³"]};
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const $=id=>document.getElementById(id),enc=encodeURIComponent;
+const api=u=>fetch(u).then(r=>r.json().then(j=>{if(!r.ok)throw new Error(j.error||r.status);return j}));
+const ci=v=>{for(let i=0;i<5;i++)if(v<=CATS[i].max)return i;return 5};
+const interp=(v,b)=>{if(v<=0)return 0;for(let i=1;i<b.length;i++)if(v<=b[i])return IDX[i-1]+(v-b[i-1])/(b[i]-b[i-1])*(IDX[i]-IDX[i-1]);return 500};
+const ft=s=>s.slice(8,10)+" "+MON[+s.slice(5,7)-1]+", "+s.slice(11,16);
+let cities=[],city,hrs=24,mode="bar",D={},info={};
+
+async function boot(){
+ info=await api("/api/info");cities=info.cities;city=cities[0];$("src").textContent=info.note;
+ $("tabs").innerHTML=cities.map(c=>'<button data-c="'+c+'">'+c+'</button>').join(" ");
+ $("tabs").onclick=e=>{if(e.target.dataset.c){city=e.target.dataset.c;render()}};
+ loadAll();
+}
+async function loadAll(){
+ $("hero").innerHTML='<div class="mut">Loading latest data...</div>';
+ await Promise.all(cities.map(async c=>{
+  const h=api("/api/city/"+enc(c)+"?hours=168").catch(e=>({error:e.message}));
+  const f=api("/api/forecast/"+enc(c)).catch(e=>({error:e.message}));
+  D[c]={hist:await h,fc:await f};
+ }));
+ try{D.metrics=await api("/api/metrics")}catch(e){D.metrics={}}
+ render();
+}
+function render(){
+ document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.c===city));
+ hero();pollutants();chart();bulletin();ranking();scale();metrics();
+}
+function hero(){
+ const d=D[city];
+ if(!d.hist||d.hist.error){$("hero").innerHTML='<div class="err">'+city+': '+(d.hist?d.hist.error:"no data")+'</div>';return}
+ const h=d.hist,cur=h.aqi[h.aqi.length-1],k=ci(cur),C=CATS[k].c,p=h.pollutants;
+ let fp='<div class="mut">Forecast not available: '+(d.fc&&d.fc.error?d.fc.error:"")+'</div>';
+ if(d.fc&&d.fc.aqi){fp=[6,24,72].map(x=>{const v=d.fc.aqi[x-1],q=CATS[ci(v)];return '<div class="fr"><div class="chip" style="background:'+q.c+'">'+v+'</div><div><b>'+q.n+'</b><small>+'+x+' h, '+ft(d.fc.times[x-1])+'</small></div></div>'}).join("")}
+ const segs=CATS.map((c,i)=>c.c+" "+(i?[0,10,20,40,60,80][i]:0)+"% "+[10,20,40,60,80,100][i]+"%").join(",");
+ const fl=[1,1,2,2,2,2];
+ $("hero").innerHTML='<div class="glow" style="background:radial-gradient(circle at 15% 115%,'+C+',transparent 62%)"></div>'+
+ '<div><div class="live"><i style="background:'+C+'"></i>Live AQI · '+city+'</div>'+
+ '<div class="row"><div class="big" style="color:'+C+'">'+cur+'</div><div><div class="mut">Air quality is</div><div class="catn" style="color:'+C+'">'+CATS[k].n+'</div></div></div>'+
+ '<div class="pm"><span>PM2.5 : <b>'+(p["PM2.5"]??"n/a")+'</b> µg/m³</span><span>PM10 : <b>'+(p["PM10"]??"n/a")+'</b> µg/m³</span></div>'+
+ '<div class="bar" style="background:linear-gradient(90deg,'+segs+')"><i class="mk" style="left:'+Math.min(100,cur/5)+'%"></i></div>'+
+ '<div class="lab">'+CATS.map((c,i)=>'<span style="flex:'+fl[i]+'">'+c.n+'<em>'+(i?CATS[i-1].max+1:0)+'-'+c.max+'</em></span>').join("")+'</div>'+
+ '<div class="mut" style="margin-top:12px;font-size:13px">Last reading: '+ft(h.as_of)+' (local time)</div></div>'+
+ '<div class="fp"><h3>Forecast (hybrid model)</h3>'+fp+'</div>';
+}
+function pollutants(){
+ const d=D[city];if(!d.hist||d.hist.error){$("pol").innerHTML="";return}
+ $("pcity").textContent=city;
+ $("pol").innerHTML=Object.keys(PN).map(k=>{const v=d.hist.pollutants[k],n=PN[k];
+  const col=v==null?"var(--ln)":CATS[ci(interp(v,BP[k]))].c;
+  return '<div class="pc" style="border-left-color:'+col+'"><div><div>'+n[0]+'</div><div class="mut">('+n[1]+')</div></div><div><b>'+(v==null?"n/a":v)+'</b><small>'+n[2]+'</small></div></div>'}).join("");
+}
+function chart(){
+ const d=D[city];if(!d.hist||d.hist.error){$("chart").innerHTML="";return}
+ const fc=d.fc&&d.fc.aqi?d.fc:null;let A=d.hist.aqi.slice(),T=d.hist.times.slice();
+ if(fc){const e=T.indexOf(fc.origin);if(e>=0){A=A.slice(0,e+1);T=T.slice(0,e+1)}}
+ A=A.slice(-hrs);T=T.slice(-hrs);
+ const F=fc?fc.aqi:[],G=fc?fc.lstm:[],FT=fc?fc.times:[],n=A.length+F.length;
+ const W=1000,Ht=330,L=44,R=10,Tp=14,B=36,vals=A.concat(F,G).filter(x=>x!=null);
+ const top=Math.max(120,Math.ceil(Math.max(...vals)/40)*40),sw=(W-L-R)/n,bw=Math.max(1.5,sw*.72);
+ const X=i=>L+i*sw+sw/2,Y=v=>Tp+(top-v)*(Ht-Tp-B)/top,all=T.concat(FT);
+ let s="";
+ for(let g=0;g<=4;g++){const v=top*g/4;s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="currentColor" stroke-opacity=".13"/><text x="'+(L-6)+'" y="'+(Y(v)+4)+'" text-anchor="end">'+Math.round(v)+'</text>'}
+ const all2=A.concat(F);
+ if(mode==="bar"){all2.forEach((v,i)=>{if(v==null)return;const f=i>=A.length;s+='<rect x="'+(X(i)-bw/2).toFixed(1)+'" y="'+Y(v).toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+(Y(0)-Y(v)).toFixed(1)+'" rx="1.5" fill="'+CATS[ci(v)].c+'" fill-opacity="'+(f?.5:1)+'"/>'})}
+ else{let p="",pen=false;A.forEach((v,i)=>{if(v==null){pen=false;return}p+=(pen?"L":"M")+X(i).toFixed(1)+","+Y(v).toFixed(1);pen=true});
+  s+='<path d="'+p+'" fill="none" stroke="var(--tx)" stroke-width="2"/>';
+  if(F.length){const q=[A.length-1].concat(F.map((_,i)=>A.length+i)),v=[A[A.length-1]].concat(F);s+='<path d="'+v.map((y,i)=>(i?"L":"M")+X(q[i]).toFixed(1)+","+Y(y).toFixed(1)).join("")+'" fill="none" stroke="'+CATS[ci(F[F.length>>1])].c+'" stroke-width="2.5" stroke-dasharray="6 4"/>'}}
+ if(G.length)s+='<path d="'+G.map((y,i)=>(i?"L":"M")+X(A.length+i).toFixed(1)+","+Y(y).toFixed(1)).join("")+'" fill="none" stroke="var(--tx)" stroke-width="1.6" stroke-dasharray="1.5 4" stroke-linecap="round"/>';
+ if(F.length)s+='<line x1="'+(L+A.length*sw)+'" x2="'+(L+A.length*sw)+'" y1="'+Tp+'" y2="'+(Ht-B)+'" stroke="currentColor" stroke-opacity=".5" stroke-dasharray="4 3"/><text x="'+(L+A.length*sw+6)+'" y="'+(Tp+11)+'">Forecast</text>';
+ [0,Math.floor(n/4),Math.floor(n/2),Math.floor(3*n/4),n-1].forEach((i,j)=>s+='<text x="'+X(i)+'" y="'+(Ht-14)+'" text-anchor="'+(j==0?"start":j==4?"end":"middle")+'">'+ft(all[i])+'</text>');
+ s+='<line id="gl" y1="'+Tp+'" y2="'+(Ht-B)+'" stroke="currentColor" stroke-opacity=".5" style="display:none"/><rect id="ov" x="'+L+'" y="'+Tp+'" width="'+(W-L-R)+'" height="'+(Ht-Tp-B)+'" fill="transparent"/>';
+ $("chart").innerHTML=s;$("chart").style.color="var(--tx)";
+ const v=A.filter(x=>x!=null),mn=Math.min(...v),mx=Math.max(...v);
+ $("mm").innerHTML=[["Min AQI",mn],["Max AQI",mx]].map(r=>'<div class="mm"><b style="background:'+CATS[ci(r[1])].c+'">'+r[1]+'</b><div>'+r[0]+'<br><span class="mut">'+ft(T[A.indexOf(r[1])])+'</span></div></div>').join("");
+ const ov=$("ov"),gl=$("gl"),tip=$("tip");
+ ov.onmousemove=e=>{const r=$("chart").getBoundingClientRect(),k=W/r.width,x=(e.clientX-r.left)*k,i=Math.min(n-1,Math.max(0,Math.floor((x-L)/sw)));
+  const val=all2[i],isF=i>=A.length;gl.setAttribute("x1",X(i));gl.setAttribute("x2",X(i));gl.style.display="";
+  tip.innerHTML='<b>'+ft(all[i])+'</b><br>'+(val==null?"no data":(isF?"Forecast: ":"AQI: ")+val+" ("+CATS[ci(val)].n+")")+(isF&&G[i-A.length]!=null?'<br>Plain LSTM: '+G[i-A.length]:"");
+  const cw=$("chart").parentElement.getBoundingClientRect();tip.style.display="block";tip.style.left=Math.min(cw.width-170,Math.max(4,e.clientX-cw.left+12))+"px";tip.style.top="20px"};
+ ov.onmouseleave=()=>{tip.style.display="none";gl.style.display="none"};
+}
+function bulletin(){
+ const d=D[city],box=$("days");
+ if(!d.fc||!d.fc.aqi){box.innerHTML='<div class="mut">Forecast not available.</div>';return}
+ const g={};d.fc.times.forEach((t,i)=>{const k=t.slice(0,10);(g[k]=g[k]||[]).push(d.fc.aqi[i])});
+ const keys=Object.keys(g);
+ box.innerHTML=keys.map((k,j)=>{const a=g[k],mx=Math.max(...a),av=Math.round(a.reduce((x,y)=>x+y,0)/a.length),q=CATS[ci(mx)],dt=new Date(k+"T00:00:00");
+  const part=(j==0||j==keys.length-1)&&a.length<24?'<div class="mut" style="font-size:12px">partial day ('+a.length+' h)</div>':'';
+  return '<div class="day"><div class="t"><span>'+DOW[dt.getDay()]+", "+k.slice(8)+" "+MON[+k.slice(5,7)-1]+(k===new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10)?" · Today":"")+'</span><span class="tag" style="background:'+q.c+'">'+q.n+'</span></div><div style="margin-top:8px">Max AQI <b>'+mx+'</b> &nbsp; Average <b>'+av+'</b></div>'+part+'</div>'}).join("");
+}
+function ranking(){
+ const rows=cities.filter(c=>D[c]&&D[c].hist&&D[c].hist.aqi).map(c=>({c,v:D[c].hist.aqi[D[c].hist.aqi.length-1],f:D[c].fc&&D[c].fc.aqi?D[c].fc.aqi[23]:null})).sort((a,b)=>b.v-a.v);
+ $("rank").innerHTML='<thead><tr><th>Rank</th><th>City</th><th>AQI now</th><th>Status</th><th>Forecast +24 h</th></tr></thead><tbody>'+rows.map((r,i)=>{const q=CATS[ci(r.v)],ar=r.f==null?"":(r.f>r.v+5?" ▲":r.f<r.v-5?" ▼":" ►");
+  return '<tr class="cl" data-c="'+r.c+'"><td>'+(i+1)+'</td><td>'+r.c+'</td><td><span class="chip" style="background:'+q.c+';display:inline-block">'+r.v+'</span></td><td style="color:'+q.c+'">'+q.n+'</td><td>'+(r.f==null?"n/a":r.f+ar)+'</td></tr>'}).join("")+'</tbody>';
+ $("rank").onclick=e=>{const t=e.target.closest("tr.cl");if(t){city=t.dataset.c;render();scrollTo({top:0,behavior:"smooth"})}};
+}
+function scale(){
+ const d=D[city],k=d.hist&&d.hist.aqi?ci(d.hist.aqi[d.hist.aqi.length-1]):-1;
+ $("scale").innerHTML=CATS.map((c,i)=>'<div class="sc'+(i==k?" cur":"")+'"><i class="sq" style="background:'+c.c+'"></i><div class="n">'+c.n+'<small>'+(i?CATS[i-1].max+1:0)+' to '+c.max+'</small></div><div>'+c.d+'</div></div>').join("");
+}
+function metrics(){
+ const x=D.metrics&&D.metrics[city];
+ if(!x){$("met").innerHTML="";$("metn").textContent="No accuracy data yet. Run train.py.";return}
+ $("metn").textContent="RMSE in AQI points on "+x.origins+" forecast starts in the last 15% of the data (from "+x.val_start.slice(0,10)+"). Lower is better. Few starts means rough numbers.";
+ $("met").innerHTML='<thead><tr><th>Model</th><th>+6 h</th><th>+24 h</th><th>+72 h</th></tr></thead><tbody>'+Object.keys(x.models).map(k=>'<tr><td>'+k.replace(/SARIMAX/g,"SARIMA")+'</td>'+["6","24","72"].map(h=>'<td>'+x.models[k][h].RMSE+'</td>').join("")+'</tr>').join("")+'</tbody>';
+}
+document.querySelectorAll("button[data-h]").forEach(b=>b.onclick=()=>{hrs=+b.dataset.h;document.querySelectorAll("button[data-h]").forEach(x=>x.classList.toggle("on",x===b));chart()});
+document.querySelectorAll("button[data-m]").forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll("button[data-m]").forEach(x=>x.classList.toggle("on",x===b));chart()});
+$("ref").onclick=()=>api("/api/refresh").then(loadAll);
+$("th").onclick=()=>{const r=document.documentElement,t=r.dataset.theme==="dark"?"light":"dark";r.dataset.theme=t;try{localStorage.setItem("theme",t)}catch(e){}};
+try{const t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+boot().catch(e=>{$("hero").innerHTML='<div class="err">'+e.message+'</div>'});
+</script></body></html>

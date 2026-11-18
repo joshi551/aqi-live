@@ -1,0 +1,7 @@
+streamlit
+flask
+pandas
+numpy
+tensorflow-cpu
+statsmodels
+requests

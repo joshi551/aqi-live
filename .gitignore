@@ -1,0 +1,4 @@
+__pycache__/
+data/live/
+data/city_hour.csv
+*.pyc
